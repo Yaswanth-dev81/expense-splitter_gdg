@@ -49,6 +49,6 @@ _If hosted, add the URL here_
 
 ---
 
-## 👤 Author
+## Author
 - Name: Yaswanth Srisailapu
 - Institute: IIT Indore
