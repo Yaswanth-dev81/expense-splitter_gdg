@@ -48,11 +48,6 @@ _Add screenshots of the application here_
 ![Feedback page](screenshot4.png)
 ---
 
-## Live Demo (Optional)
-_If hosted, add the URL here_
-
----
-
 ## Author
 - Name: Yaswanth Srisailapu
 - Institute: IIT Indore
