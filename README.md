@@ -19,6 +19,7 @@ This project is built using **HTML, CSS, and JavaScript**, with data persistence
   - Total amount spent by each member
   - Net balance (who owes / who gets)
   - Settlement suggestions
+  - Feedback 
 - Dark mode toggle
 - Data persists on page refresh using localStorage
 
