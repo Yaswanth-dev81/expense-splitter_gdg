@@ -42,7 +42,10 @@ This project is built using **HTML, CSS, and JavaScript**, with data persistence
 
 ## Screenshots
 _Add screenshots of the application here_
-
+![Main Page](screenshot1.png)
+![Expenses page](screenshot2.png)
+![Settlement page](screenshot3.png)
+![Feedback page](screenshot4.png)
 ---
 
 ## Live Demo (Optional)
