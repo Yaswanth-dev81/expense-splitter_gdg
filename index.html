@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter - Fair Group Expense Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="theme-toggle" id="theme-toggle" title="Toggle theme">
+        <span class="theme-icon">🌙</span>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Expense Splitter</h1>
+            <p class="subtitle">Track and settle group expenses with precision</p>
+            
+            <!-- Progress Indicator -->
+            <div class="progress-bar">
+                <div class="progress-step active" data-step="1">
+                    <div class="progress-dot"></div>
+                    <div class="progress-label">Members</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="progress-dot"></div>
+                    <div class="progress-label">Expenses</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="progress-dot"></div>
+                    <div class="progress-label">Settlement</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="4">
+                    <div class="progress-dot"></div>
+                    <div class="progress-label">Feedback</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Step 1: Add Members -->
+            <section class="step-container active" id="step-1">
+                <div class="card">
+                    <div class="section-header">
+                        <h2>Step 1: Add Group Members</h2>
+                        <button class="btn-secondary" id="clear-all-btn" title="Clear all data">Clear All</button>
+                    </div>
+                    
+                    <div class="step-content">
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                id="member-name-input" 
+                                placeholder="Enter member name"
+                                autocomplete="off"
+                                maxlength="50"
+                            >
+                            <button class="btn-primary" id="add-member-btn">Add Member</button>
+                        </div>
+
+                        <div id="members-list" class="members-list"></div>
+
+                        <div class="step-actions">
+                            <button class="btn-nav btn-next" id="next-to-expenses" disabled>
+                                Next: Add Expenses →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: Expenses Management (Add Expense + Expense History + Member Balances) -->
+            <section class="step-container" id="step-2">
+                <div class="card">
+                    <div class="section-header">
+                        <h2>Step 2: Manage Expenses & View Balances</h2>
+                    </div>
+
+                    <div class="step-content">
+                        <!-- Tabs for different views -->
+                        <div class="tabs">
+                            <button class="tab-btn active" data-tab="add-expense">Add Expense</button>
+                            <button class="tab-btn" data-tab="expense-history">Expense History</button>
+                            <button class="tab-btn" data-tab="member-balances">Member Balances</button>
+                        </div>
+
+                        <!-- Tab Content: Add Expense -->
+                        <div class="tab-content active" id="add-expense-tab">
+                            <form id="expense-form" class="expense-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="expense-title">Description</label>
+                                        <input 
+                                            type="text" 
+                                            id="expense-title" 
+                                            placeholder="e.g., Dinner at restaurant"
+                                            required
+                                            maxlength="100"
+                                        >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="expense-amount">Amount</label>
+                                        <input 
+                                            type="text" 
+                                            id="expense-amount" 
+                                            placeholder="0.00"
+                                            pattern="^\d+(\.\d{0,2})?$"
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="expense-paid-by">Paid By</label>
+                                        <select id="expense-paid-by" required>
+                                            <option value="">Select member</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Split Between</label>
+                                        <div id="split-between-checkboxes" class="checkbox-group"></div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-primary btn-block">Add Expense</button>
+                            </form>
+                        </div>
+
+                        <!-- Tab Content: Expense History -->
+                        <div class="tab-content" id="expense-history-tab">
+                            <div id="expenses-list" class="expenses-list"></div>
+                        </div>
+
+                        <!-- Tab Content: Member Balances -->
+                        <div class="tab-content" id="member-balances-tab">
+                            <div id="balances-list" class="balances-list"></div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button class="btn-nav btn-prev" id="prev-to-members">
+                                ← Previous: Members
+                            </button>
+                            <button class="btn-nav btn-next" id="next-to-settlement">
+                                Next: View Settlement →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 3: Settlement Summary -->
+            <section class="step-container" id="step-3">
+                <div class="card">
+                    <div class="section-header">
+                        <h2>Step 3: Settlement Summary</h2>
+                        <span class="info-badge" title="Minimum number of transactions to settle all debts">Optimized</span>
+                    </div>
+
+                    <div class="step-content">
+                        <div class="settlement-overview">
+                            <div id="settlement-stats" class="settlement-stats"></div>
+                        </div>
+
+                        <div id="settlement-list" class="settlement-list"></div>
+
+                        <div class="step-actions">
+                            <button class="btn-nav btn-prev" id="prev-to-expenses">
+                                ← Previous: Expenses
+                            </button>
+                            <button class="btn-nav btn-next" id="next-to-feedback">
+                                Next: Feedback →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 4: Feedback -->
+            <section class="step-container" id="step-4">
+                <div class="card">
+                    <div class="section-header">
+                        <h2>Step 4: Your Feedback</h2>
+                    </div>
+
+                    <div class="step-content">
+                        <div class="feedback-container">
+                            <div class="feedback-header">
+                                <h3>How was your experience?</h3>
+                                <p>We'd love to hear your thoughts about the Expense Splitter</p>
+                            </div>
+
+                            <form id="feedback-form" class="feedback-form">
+                                <div class="form-group">
+                                    <label>Rate your experience</label>
+                                    <div class="rating-stars" id="rating-stars">
+                                        <span class="star" data-rating="1">★</span>
+                                        <span class="star" data-rating="2">★</span>
+                                        <span class="star" data-rating="3">★</span>
+                                        <span class="star" data-rating="4">★</span>
+                                        <span class="star" data-rating="5">★</span>
+                                    </div>
+                                    <input type="hidden" id="rating-value" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="feedback-text">Your Feedback (Optional)</label>
+                                    <textarea 
+                                        id="feedback-text" 
+                                        rows="6"
+                                        placeholder="Tell us what you liked or what could be improved..."
+                                        maxlength="500"
+                                    ></textarea>
+                                    <div class="char-count">
+                                        <span id="char-count">0</span>/500 characters
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-primary btn-block">Submit Feedback</button>
+                            </form>
+
+                            <div id="feedback-success" class="feedback-success hidden">
+                                <div class="success-icon">✓</div>
+                                <h3>Thank you for your feedback!</h3>
+                                <p>Your input helps us improve the Expense Splitter experience.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button class="btn-nav btn-prev" id="prev-to-settlement">
+                                ← Previous: Settlement
+                            </button>
+                            <button class="btn-nav btn-restart" id="restart-btn">
+                                Start New Session
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>All calculations use precision decimal arithmetic to ensure accuracy</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
